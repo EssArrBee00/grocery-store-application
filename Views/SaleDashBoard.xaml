@@ -1,0 +1,57 @@
+﻿<UserControl x:Class="Assignment02.Views.SaleDashBoard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Assignment02.Views"
+             xmlns:converter="clr-namespace:Assignment02.Convertor"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <converter:myConverterr x:Key="conv"></converter:myConverterr>
+    </UserControl.Resources>
+    <Grid Background="AntiqueWhite">
+        <Label Content="SALE" HorizontalContentAlignment="Center"  Foreground="RosyBrown" FontSize="30"></Label>
+        <StackPanel Orientation="Horizontal" Height="70" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,40,0,0">
+            <Label Content="ITEM ID" VerticalContentAlignment="Center" Margin="0,0,10,0"></Label>
+            <TextBox Name="titem" Width="130" Height="30" Margin="0,0,10,0"></TextBox>
+            <Label Content="QUANTITY" VerticalContentAlignment="Center" Margin="0,0,10,0"></Label>
+            <TextBox Name="tquantity" Width="130" Height="30" Margin="0,0,30,0"></TextBox>
+            <Button Name="AddtocButton" Foreground="RosyBrown" FontWeight="Black" Background="White" Command="{Binding addcmd, NotifyOnSourceUpdated=True ,NotifyOnTargetUpdated=True}" Width="100" Content="ADD" Height="30" Margin="0,0,20,0" >
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource conv}">
+                        <Binding ElementName="titem" Path="Text"></Binding>
+                        <Binding ElementName="tquantity" Path="Text"></Binding>
+                    </MultiBinding>
+                </Button.CommandParameter>
+            </Button>
+            <Button Name="finishButton" Command="{Binding finishcmd}" Foreground="RosyBrown" FontWeight="Black" Background="White" Width="100" Content="FINISH" Height="30" Margin="0,0,20,0"></Button>
+            <Button Name="logoutButton" Command="{Binding logoutcmd}" Foreground="RosyBrown" FontWeight="Black" Background="White" Width="100" Content="LOGOUT" Height="30" Margin="0,0,10,0"></Button>
+
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="10,120,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="300" >
+            <DataGrid Name="LeftDgrid" CanUserAddRows="False" AutoGenerateColumns="False" AlternatingRowBackground="RosyBrown"   Width="350" Margin="20,0,0,0" ItemsSource="{Binding Plist}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="PRODUCT ID" Binding="{Binding ProductID}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="PRODUCT NAME" Binding="{Binding ProductName}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="PRODUCT QUANTITY" Binding="{Binding ProductQuantity}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="PRICE" Binding="{Binding ProductPrice}"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="0,120,40,0" HorizontalAlignment="Right" VerticalAlignment="Center" Height="300">
+            <DataGrid Name="RightDgrid" CanUserAddRows="False" AutoGenerateColumns="False"  AlternatingRowBackground="RosyBrown" Width="350" Margin="20,0,0,0" ItemsSource="{Binding Blist,UpdateSourceTrigger=PropertyChanged}" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="PRODUCT ID" Binding="{Binding ProductID}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="PRODUCT NAME" Binding="{Binding ProductName}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="PRODUCT QUANTITY" Binding="{Binding ProductQuantity}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="PRICE" Binding="{Binding ProductPrice}"></DataGridTextColumn>
+                </DataGrid.Columns>
+                
+            </DataGrid>
+
+        </StackPanel>
+        
+            
+    </Grid>
+</UserControl>
